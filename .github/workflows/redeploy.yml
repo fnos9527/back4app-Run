@@ -39,9 +39,12 @@ jobs:
             try {
               console.log('正在导航到登录页面...');
               await page.goto('https://back4app.com/login?return-url=https%3A%2F%2Fcontainers.back4app.com%2Fapps', {
-                waitUntil: 'networkidle',
+                waitUntil: 'domcontentloaded',
                 timeout: 30000
               });
+
+              // 等待邮箱输入框出现再操作
+              await page.waitForSelector('input[type="email"]', { timeout: 15000 });
 
               console.log('正在输入邮箱...');
               await page.fill('input[type="email"]', process.env.B4A_EMAIL);
@@ -54,9 +57,9 @@ jobs:
 
               console.log('等待跳转到应用列表...');
               await page.waitForURL('**/apps**', { timeout: 30000 });
-              await page.waitForLoadState('networkidle');
+              // 等待应用列表中的链接出现
+              await page.waitForSelector('a[href*="/apps/"]', { timeout: 20000 });
 
-              // 直接从 href 提取 app ID，然后跳转，不再点击元素
               console.log('获取 myapp 链接...');
               const appHref = await page.locator('a[href*="/apps/"]').first().getAttribute('href');
               if (!appHref) {
@@ -64,8 +67,16 @@ jobs:
               }
               const appUrl = 'https://containers.back4app.com' + appHref;
               console.log('直接导航到应用页面:', appUrl);
-              await page.goto(appUrl, { waitUntil: 'networkidle', timeout: 30000 });
-              await page.waitForTimeout(2000);
+
+              await page.goto(appUrl, {
+                waitUntil: 'domcontentloaded',
+                timeout: 30000
+              });
+
+              // 等待页面主要内容加载，以 Redeploy 或 Action 按钮出现为准
+              console.log('等待应用详情页内容加载...');
+              await page.waitForSelector('button, [class*="btn"]', { timeout: 20000 });
+              await page.waitForTimeout(3000);
 
               console.log('检查是否存在 Redeploy App 按钮...');
               const redeployBtn = page.locator('button:has-text("Redeploy App")').first();
