@@ -2,8 +2,8 @@ name: Back4app Auto Redeploy
 
 on:
   schedule:
-    - cron: '*/60 * * * *'  # 每60分钟运行一次
-  workflow_dispatch:  # 允许手动触发
+    - cron: '0 * * * *'
+  workflow_dispatch:
 
 jobs:
   redeploy:
@@ -28,7 +28,6 @@ jobs:
         env:
           B4A_EMAIL: ${{ secrets.B4A_EMAIL }}
           B4A_PASSWORD: ${{ secrets.B4A_PASSWORD }}
-          B4A_APP_URL: ${{ secrets.B4A_APP_URL }}
         run: |
           cat > redeploy.js << 'EOF'
           const { chromium } = require('playwright');
@@ -45,13 +44,14 @@ jobs:
               });
 
               console.log('正在输入邮箱...');
-              await page.fill('input[type="email"], input[name="email"], input[placeholder*="email" i]', process.env.B4A_EMAIL);
+              await page.fill('input[type="email"]', process.env.B4A_EMAIL);
               
               console.log('正在输入密码...');
               await page.fill('input[type="password"]', process.env.B4A_PASSWORD);
 
+              // 精确定位：找包含邮箱输入框的表单内的提交按钮，避免点到 Google/Github 按钮
               console.log('点击登录按钮...');
-              await page.click('button:has-text("Continue"), button[type="submit"]');
+              await page.locator('form button[type="submit"], form button:has-text("Continue")').last().click();
 
               console.log('等待跳转到应用列表...');
               await page.waitForURL('**/apps**', { timeout: 30000 });
@@ -65,7 +65,7 @@ jobs:
               await page.waitForTimeout(2000);
 
               console.log('检查是否存在 Redeploy App 按钮...');
-              const redeployBtn = await page.locator('button:has-text("Redeploy App"), a:has-text("Redeploy App")').first();
+              const redeployBtn = page.locator('button:has-text("Redeploy App"), a:has-text("Redeploy App")').first();
               
               const isVisible = await redeployBtn.isVisible().catch(() => false);
               
@@ -80,7 +80,7 @@ jobs:
 
             } catch (error) {
               console.error('❌ 发生错误:', error.message);
-              await page.screenshot({ path: 'error-screenshot.png' });
+              await page.screenshot({ path: 'error-screenshot.png', fullPage: true });
               process.exit(1);
             } finally {
               await browser.close();
