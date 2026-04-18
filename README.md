@@ -40,7 +40,7 @@ Execution schedule  选 Every hour
 
 展开 Advanced → Headers，添加：
 
-Authorization=你第1步复制的token
+Authorization=Bearer +你第1步复制的token
 
 Content-Type=application/json
 
