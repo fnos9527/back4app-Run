@@ -1,8 +1,6 @@
 name: Back4app Auto Redeploy
 
 on:
-  schedule:
-    - cron: '0 * * * *'
   workflow_dispatch:
 
 jobs:
@@ -43,7 +41,6 @@ jobs:
                 timeout: 30000
               });
 
-              // 等待邮箱输入框出现再操作
               await page.waitForSelector('input[type="email"]', { timeout: 15000 });
 
               console.log('正在输入邮箱...');
@@ -57,7 +54,6 @@ jobs:
 
               console.log('等待跳转到应用列表...');
               await page.waitForURL('**/apps**', { timeout: 30000 });
-              // 等待应用列表中的链接出现
               await page.waitForSelector('a[href*="/apps/"]', { timeout: 20000 });
 
               console.log('获取 myapp 链接...');
@@ -73,7 +69,6 @@ jobs:
                 timeout: 30000
               });
 
-              // 等待页面主要内容加载，以 Redeploy 或 Action 按钮出现为准
               console.log('等待应用详情页内容加载...');
               await page.waitForSelector('button, [class*="btn"]', { timeout: 20000 });
               await page.waitForTimeout(3000);
