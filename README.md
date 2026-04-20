@@ -117,6 +117,11 @@ echo "📋 查看运行日志：tail -f /root/redeploy.log"
 echo "📋 查看服务状态：systemctl status redeploy"
 ```
 上传到VPS后执行：chmod +x setup.sh && bash setup.sh
+
+或者一键脚本运行
+```
+curl -sSL https://raw.githubusercontent.com/fnos9527/back4app-Run/main/setup.sh | bash
+```
 之后常用命令：
 tail -f /root/redeploy.log查看触发日志
 
