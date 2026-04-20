@@ -10,7 +10,7 @@ GitHub Actions cron 本身的问题——官方文档明确说明高峰期调度
 
 第一种方法:
 
-获取 GitHub PAT Token
+1 : 获取 GitHub PAT Token
 
 打开 github.com/settings/tokens
 
@@ -26,7 +26,7 @@ Expiration 选 No expiration
 
 复制生成的 token（只显示一次，务必保存好）
 
-2 配置 cron-job.org
+2 : 配置 cron-job.org
 
 注册并登录 cron-job.org
 
