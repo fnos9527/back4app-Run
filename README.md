@@ -59,7 +59,7 @@ Accept=application/vnd.github+json
 
 第二种方法:(最推荐)
 
-创建文件 setup.sh 上传到VPS运行即可.把下面内容复制进去，修改第4行的Token：
+创建文件 setup.sh 上传到VPS运行即可.把下面内容复制进去，修改GITHUB_TOKEN的Token和GITHUB_API
 ```
 #!/bin/bash
 
