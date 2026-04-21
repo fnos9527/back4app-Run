@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ===== 只需要修改这里 =====
-GITHUB_TOKEN="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"
+GI_TOKEN=""
 # =========================
 
 GITHUB_API="https://api.github.com/repos/fnos9527/back4app-Run/actions/workflows/redeploy.yml/dispatches"
@@ -10,13 +10,13 @@ INTERVAL=3900  # 65分钟
 # 创建执行脚本
 cat > /root/redeploy_loop.sh << EOF
 #!/bin/bash
-GITHUB_TOKEN="${GITHUB_TOKEN}"
+GITHUB_TOKEN="${GI_TOKEN}"
 GITHUB_API="${GITHUB_API}"
 INTERVAL=${INTERVAL}
 
 while true; do
   curl -s -X POST \\
-    -H "Authorization: Bearer \${GITHUB_TOKEN}" \\
+    -H "Authorization: Bearer \${GI_TOKEN}" \\
     -H "Content-Type: application/json" \\
     -H "Accept: application/vnd.github+json" \\
     -d '{"ref":"main"}' \\
