@@ -64,14 +64,16 @@ Accept=application/vnd.github+json
 curl -sSL https://raw.githubusercontent.com/fnos9527/back4app-Run/main/setup.sh | bash
 ```
 # 停止并删除所有相关服务和文件
+```
 systemctl stop redeploy
 systemctl disable redeploy
 rm -f /etc/systemd/system/redeploy.service
 rm -f /root/redeploy_loop.sh
 rm -f /root/redeploy.log
 systemctl daemon-reload
-
+```
 # 确认清理干净
+```
 systemctl status redeploy
 ```
 看到 Unit redeploy.service could not be found 说明清理成功。
