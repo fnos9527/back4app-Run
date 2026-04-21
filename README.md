@@ -70,6 +70,7 @@ sed -i 's/GITHUB_TOKEN=".*"/GITHUB_TOKEN="ghp_xxxxxx"/' /root/redeploy_loop.sh
 ```
 systemctl restart redeploy && sleep 5 && systemctl status redeploy
 ```
+没有 Bad credentials 就成功了
 # 停止并删除所有相关服务和文件
 ```
 systemctl stop redeploy
