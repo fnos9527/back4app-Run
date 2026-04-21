@@ -59,9 +59,16 @@ Accept=application/vnd.github+json
 
 第二种方法:(最推荐)
 
-创建文件 setup.sh 上传到VPS运行即可.把下面内容复制进去，修改GI_TOKEN的Token和GITHUB_API
+创建文件 setup.sh 上传到VPS运行即可.把下面内容复制进去，修改GITHUB_TOKEN的Token和GITHUB_API
 ```
 curl -sSL https://raw.githubusercontent.com/fnos9527/back4app-Run/main/setup.sh | bash
+```
+换 Token 也只需要这两条命令
+```
+sed -i 's/GITHUB_TOKEN=".*"/GITHUB_TOKEN="ghp_xxxxxx"/' /root/redeploy_loop.sh
+```
+```
+systemctl restart redeploy && sleep 5 && systemctl status redeploy
 ```
 # 停止并删除所有相关服务和文件
 ```
