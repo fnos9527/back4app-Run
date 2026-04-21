@@ -5,7 +5,7 @@ GITHUB_TOKEN="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"
 # =========================
 
 GITHUB_API="https://api.github.com/repos/fnos9527/back4app-Run/actions/workflows/redeploy.yml/dispatches"
-INTERVAL=4200  # 70分钟
+INTERVAL=3900  # 65分钟
 
 # 创建执行脚本
 cat > /root/redeploy_loop.sh << EOF
