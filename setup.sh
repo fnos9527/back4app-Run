@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ===== 只需要修改这里 =====
-GITHUB_TOKEN="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"
+GITHUB_TOKEN="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"
 # =========================
 
 GITHUB_API="https://api.github.com/repos/fnos9527/back4app-Run/actions/workflows/redeploy.yml/dispatches"
