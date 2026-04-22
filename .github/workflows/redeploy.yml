@@ -54,7 +54,8 @@ jobs:
 
               console.log('等待跳转到应用列表...');
               await page.waitForURL('**/apps**', { timeout: 30000 });
-              await page.waitForSelector('a[href*="/apps/"]', { timeout: 20000 });
+              await page.waitForTimeout(3000);
+              await page.waitForSelector('a[href*="/apps/"]', { timeout: 20000, state: 'attached' });
 
               console.log('获取 myapp 链接...');
               const appHref = await page.locator('a[href*="/apps/"]').first().getAttribute('href');
